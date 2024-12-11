@@ -2,9 +2,10 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   const conn = await mongoose.connect(
-    "mongodb+srv://admin:admin@cluster0.aufw7.mongodb.net/"
+    "mongodb+srv://slamg:slamg@cluster0.nrcex.mongodb.net/"
   );
   console.log(`mongo connected: ${conn.connection.host}`);
 };
 
 module.exports = connectDB;
+
