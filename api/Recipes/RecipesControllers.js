@@ -44,10 +44,10 @@ exports.RecipesDetailsIdController = async (req, res) => {
   }
 };
 // by Name of Recipes
-exports.RecipesDetailNameController = (req, res) => {
+exports.RecipesDetailNameController = async (req, res) => {
   const { RecipesName } = req.params;
-  const name = Recipes.find(
-    (name) => name.RecipesName.toLowerCase() === RecipesName.toLowerCase()
+  const name = await Recipes.findOne({ 
+    name: { "$regex": RecipesName, "$options": "i" } }
   );
   console.log(name);
   if (name) {
@@ -57,10 +57,10 @@ exports.RecipesDetailNameController = (req, res) => {
   }
 };
 // by creater of Recipes
-exports.RecipesDetailCreaterController = (req, res) => {
+exports.RecipesDetailCreaterController = async (req, res) => {
   const { RecipesCreater } = req.params;
-  const name = Recipes.find(
-    (name) => name.RecipesCreater.toLowerCase() === RecipesCreater.toLowerCase()
+  const name = await Recipes.findOne({ 
+    creater: { "$regex": RecipesCreater, "$options": "i" } }
   );
   console.log(name);
   if (name) {

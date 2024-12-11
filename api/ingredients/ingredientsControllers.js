@@ -39,10 +39,10 @@ exports.ingredientDetailIdController = async (req, res) => {
   }
 };
 // by name of ingrediant
-exports.ingredientDetailNameController = (req, res) => {
+exports.ingredientDetailNameController = async (req, res) => {
   const { ingredientName } = req.params;
-  const name = Ingredients.find(
-    (name) => name.ingredientName.toLowerCase() === ingredientName.toLowerCase()
+  const name = await Ingredients.find({ 
+    name: { "$regex": ingredientName, "$options": "i" } }
   );
   console.log(name);
   if (name) {

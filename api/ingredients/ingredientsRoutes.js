@@ -38,7 +38,7 @@ router.post(
 );
 // to Update an Ingredients  by ID
 router.put(
-  "//:ingredientId",
+  "/:ingredientId",
   upload.single("image"),
   updateIngredientByIdController
 );
@@ -47,7 +47,7 @@ router.delete("/:ingredientId", deleteIngredientIdController);
 // to find an Ingredients by ID
 router.get("/:ingredientId", ingredientDetailIdController);
 // to find an Ingredients by Name
-router.get("/:ingredientName", ingredientDetailNameController);
+router.get("/ingredient/:ingredientName", ingredientDetailNameController);
 
 // ----------------------------------------------------------------
 

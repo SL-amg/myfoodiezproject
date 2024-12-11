@@ -46,6 +46,6 @@ router.delete("/:accountId", deleteAccountIdController);
 router.get("/:accountId", accountDetailIdController);
 
 // Retrieve Account by Username
-router.get("/:userName", accountDetailUserController);
+router.get("/user/:userName", accountDetailUserController);
 
 module.exports = router;

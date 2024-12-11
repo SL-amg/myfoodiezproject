@@ -51,10 +51,10 @@ exports.accountDetailIdController = async (req, res) => {
 
 // Retrieve an Account's Detail by Username
 
-exports.accountDetailUserController = (req, res) => {
+exports.accountDetailUserController = async (req, res) => {
   const { userName } = req.params;
-  const name = Account.find(
-    (name) => name.username.toLowerCase() === userName.toLowerCase()
+  const name = await Account.findOne({ 
+    username: { "$regex": userName, "$options": "i" } }
   );
   console.log(name);
   if (name) {

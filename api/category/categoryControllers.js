@@ -44,10 +44,10 @@ exports.categoryDetailIdController = async (req, res) => {
   }
 };
 // to find by Category Name
-exports.categoryDetailNameController = (req, res) => {
+exports.categoryDetailNameController =async (req, res) => {
   const { categoryName } = req.params;
-  const name = Category.find(
-    (name) => name.categoryName.toLowerCase() === categoryName.toLowerCase()
+  const name = await Category.find({ 
+    name: { "$regex": categoryName, "$options": "i" } }
   );
   console.log(name);
   if (name) {

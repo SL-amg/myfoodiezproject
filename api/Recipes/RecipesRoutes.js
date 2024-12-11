@@ -41,9 +41,9 @@ router.delete("/:RecipesId", deleteRecipesIdController);
 // to find an Recipes by ID
 router.get("/:RecipesId", RecipesDetailsIdController);
 // to find an Recipes by Name
-router.get("/:RecipesName", RecipesDetailNameController);
+router.get("/name/:RecipesName", RecipesDetailNameController);
 // to find an Recipes by Creater
-router.get("/:RecipesCreater", RecipesDetailCreaterController);
+router.get("/creater/:RecipesCreater", RecipesDetailCreaterController);
 
 // ----------------------------------------------------------------
 

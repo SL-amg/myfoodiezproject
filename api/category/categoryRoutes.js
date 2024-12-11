@@ -45,7 +45,7 @@ router.delete("/:categoryId", deleteCategoryIdController);
 // to find an Category by ID
 router.get("/:categoryId", categoryDetailIdController);
 // to find an Category by Name
-router.get("/:categoryName", categoryDetailNameController);
+router.get("/name/:categoryName", categoryDetailNameController);
 // ----------------------------------------------------------------
 
 module.exports = router;
