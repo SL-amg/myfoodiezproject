@@ -24,7 +24,7 @@ exports.creatCategoryController = (req, res) => {
 // to get all categories Fetch Get
 exports.listCategoriesController = async (req, res) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().populate("Recipes"); // added this
     res.status(200).json(categories);
   } catch (e) {
     res.status(500).json(e.message);
