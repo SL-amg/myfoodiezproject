@@ -1,5 +1,5 @@
 // this controller is created to add/Modify/Read a new Ingredient
-const Ingredients = require("../../models/Ingredients");
+const Ingredient = require("../../models/Ingredient");
 
 // ----------------------------------------------------------------
 // to Create a new ingredient
@@ -8,7 +8,7 @@ exports.createIngredientController = async (req, res) => {
     if (req.file) {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`; //updated file to upload image
     }
-    const ingredient = new Ingredients(req.body);
+    const ingredient = new Ingredient(req.body);
     const savedIngredient = await ingredient.save();
     res.status(201).json(savedIngredient);
   } catch (e) {
@@ -20,7 +20,7 @@ exports.createIngredientController = async (req, res) => {
 // to get all ingredients List
 exports.listIngredientsController = async (req, res) => {
   try {
-    const ingredients = await Ingredients.find();
+    const ingredients = await Ingredient.find();
     res.status(200).json(ingredients);
   } catch (error) {
     res.status(500).json(error);
@@ -31,7 +31,7 @@ exports.listIngredientsController = async (req, res) => {
 // by ID
 exports.ingredientDetailIdController = async (req, res) => {
   const { ingredientId } = req.params;
-  const ingredient = await Ingredients.findById(ingredientId);
+  const ingredient = await Ingredient.findById(ingredientId);
   if (ingredient) {
     res.status(200).json(ingredient);
   } else {
@@ -41,7 +41,7 @@ exports.ingredientDetailIdController = async (req, res) => {
 // by name of ingrediant
 exports.ingredientDetailNameController = async (req, res) => {
   const { ingredientName } = req.params;
-  const name = await Ingredients.find({ 
+  const name = await Ingredient.find({ 
     name: { "$regex": ingredientName, "$options": "i" } }
   );
   console.log(name);
@@ -60,7 +60,7 @@ exports.updateIngredientByIdController = async (req, res) => {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`; //updated file to upload image
     }
     const { ingredientId } = req.params;
-    const foundIngredient = await Ingredients.findById(ingredientId);
+    const foundIngredient = await Ingredient.findById(ingredientId);
     if (foundIngredient) {
       await foundIngredient.updateOne(req.body);
       res.status(202).json();
@@ -78,7 +78,7 @@ exports.updateIngredientByIdController = async (req, res) => {
 exports.deleteIngredientIdController = async (req, res) => {
   try {
     const { ingredientId } = req.params;
-    const foundIngredient = await Ingredients.findById(ingredientId);
+    const foundIngredient = await Ingredient.findById(ingredientId);
     if (foundIngredient) {
       await foundIngredient.deleteOne();
       res.status(204).end();

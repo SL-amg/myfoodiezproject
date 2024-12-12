@@ -1,6 +1,6 @@
 const { model, Schema } = require("mongoose");
 
-const categorySchema = new Schema({
+const CategorySchema = new Schema({
   name: String,
   recipes: [
     {
@@ -11,4 +11,4 @@ const categorySchema = new Schema({
 }
 );
 
-module.exports = model("Category", categorySchema);
+module.exports = model("Category", CategorySchema);
