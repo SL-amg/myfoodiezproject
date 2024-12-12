@@ -5,7 +5,7 @@ const CategorySchema = new Schema({
   recipes: [
     {
     type: Schema.Types.ObjectId,
-    ref: "Recipes",
+    ref: "Recipe",
   }
   ], // added this 
 }

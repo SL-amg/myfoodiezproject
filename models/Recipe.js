@@ -10,7 +10,7 @@ const RecipeSchema = new Schema({
   category: {
     type: Schema.Types.ObjectId,
     ref: "Category"
-  }, // added this
+  }, 
   ingredients: [
     {
       type: Schema.Types.ObjectId,
