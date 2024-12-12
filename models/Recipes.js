@@ -4,11 +4,7 @@ const Category = require("./Category");
 const RecipesSchema = new Schema({
   name: String,
   image: String,
-  ingredients: [{
-    type: Schema.Types.ObjectId,
-    ref: "Ingredients",
-  }
-  ],
+  ingredients: String,
   nutritionFact: String,
   video: String,
   creater: String,

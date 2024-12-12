@@ -9,12 +9,12 @@ const creatNewRecipes = async (newRecipesData) => {
   const newRecipes = await Recipes.create(newRecipesData);
   return newRecipes;
 };
-exports.creatRecipesController = (req, res) => {
+exports.creatRecipesController =async (req, res) => {
   try {
     if (req.file) {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`; //updated file to upload image
     }
-    const newRecipes = creatNewRecipes(req.body);
+    const newRecipes = await creatNewRecipes(req.body);
     res.status(201).json(newRecipes);
   } catch (e) {
     res.status(500).json(e.message);
@@ -25,7 +25,7 @@ exports.creatRecipesController = (req, res) => {
 // to get all Recipess List
 exports.listRecipesController = async (req, res) => {
   try {
-    const recipess = await Recipes.find().populate("Category").populate("Ingredients");
+    const recipess = await Recipes.find().populate("Category");
     res.status(200).json(recipess);
   } catch (error) {
     res.status(500).json(error);
@@ -36,7 +36,7 @@ exports.listRecipesController = async (req, res) => {
 // by ID
 exports.RecipesDetailsIdController = async (req, res) => {
   const { RecipesId } = req.params;
-  const recipes = await Recipes.findById(RecipesId);
+  const recipes = await Recipes.findById(RecipesId).populate("Category");
   if (recipes) {
     res.status(200).json(recipes);
   } else {
@@ -48,7 +48,7 @@ exports.RecipesDetailNameController = async (req, res) => {
   const { RecipesName } = req.params;
   const name = await Recipes.findOne({ 
     name: { "$regex": RecipesName, "$options": "i" } }
-  );
+  ).populate("Category");
   console.log(name);
   if (name) {
     res.status(200).json(name);
@@ -61,7 +61,7 @@ exports.RecipesDetailCreaterController = async (req, res) => {
   const { RecipesCreater } = req.params;
   const name = await Recipes.findOne({ 
     creater: { "$regex": RecipesCreater, "$options": "i" } }
-  );
+  ).populate("Category");
   console.log(name);
   if (name) {
     res.status(200).json(name);

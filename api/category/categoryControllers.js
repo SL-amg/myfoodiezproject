@@ -36,7 +36,7 @@ exports.listCategoriesController = async (req, res) => {
 // to find an category by ID
 exports.categoryDetailIdController = async (req, res) => {
   const { categoryId } = req.params;
-  const category = await Category.findById(categoryId);
+  const category = await Category.findById(categoryId).populate("Recipes");
   if (category) {
     res.status(200).json(category);
   } else {
@@ -48,7 +48,7 @@ exports.categoryDetailNameController =async (req, res) => {
   const { categoryName } = req.params;
   const name = await Category.find({ 
     name: { "$regex": categoryName, "$options": "i" } }
-  );
+  ).populate("Recipes");
   console.log(name);
   if (name) {
     res.status(200).json(name);
