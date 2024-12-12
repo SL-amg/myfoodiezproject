@@ -25,7 +25,7 @@ exports.creatRecipesController = (req, res) => {
 // to get all Recipess List
 exports.listRecipesController = async (req, res) => {
   try {
-    const recipess = await Recipes.find().populate("Category");
+    const recipess = await Recipes.find().populate("Category").populate("Ingredients");
     res.status(200).json(recipess);
   } catch (error) {
     res.status(500).json(error);

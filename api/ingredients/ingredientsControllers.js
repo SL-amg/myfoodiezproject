@@ -20,7 +20,7 @@ exports.createIngredientController = async (req, res) => {
 // to get all ingredients List
 exports.listIngredientsController = async (req, res) => {
   try {
-    const ingredients = await Ingredients.find();
+    const ingredients = await Ingredients.find().populate("Recipes");
     res.status(200).json(ingredients);
   } catch (error) {
     res.status(500).json(error);
