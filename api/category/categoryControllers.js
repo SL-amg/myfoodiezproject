@@ -96,4 +96,13 @@ exports.deleteCategoryIdController = async (req, res) => {
   }
 };
 // ----------------------------------------------------------------
+// to add ingredient to recipy
+exports.addRecipyToCategory = async (req, res) => {
+  const { categoryId, RecipesId } = req.params;
+  const category = await Category.findById(categoryId);
+  const updatedCategory = await category.updateOne({
+    $push: {recipes : RecipesId},
+  })
+  res.status(200).json(updatedCategory);
+}
 //END of Controller

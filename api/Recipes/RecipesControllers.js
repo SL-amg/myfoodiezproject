@@ -111,4 +111,13 @@ exports.deleteRecipesIdController = async (req, res) => {
   }
 };
 // ----------------------------------------------------------------
+// to add ingredient to recipy
+exports.addIngredientToRecipe = async (req, res) => {
+    const { RecipesId, ingredientId } = req.params;
+    const recipe = await Recipe.findById(RecipesId);
+    const updatedRecipe = await recipe.updateOne({
+      $push: {ingredients : ingredientId},
+    })
+    res.status(200).json(updatedRecipe);
+  }
 //END of Controller

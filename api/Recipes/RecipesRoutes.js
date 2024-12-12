@@ -11,6 +11,7 @@ const {
   creatRecipesController,
   updateRecipesByIdController,
   deleteRecipesIdController,
+  addIngredientToRecipe,
 } = require("./RecipesControllers");
 // ----------------------------------------------------------------
 
@@ -44,6 +45,8 @@ router.get("/:RecipesId", RecipesDetailsIdController);
 router.get("/name/:RecipesName", RecipesDetailNameController);
 // to find an Recipes by Creater
 router.get("/creater/:RecipesCreater", RecipesDetailCreaterController);
+//to add ingredneti to recipy
+router.post("/:RecipesId/add/:ingredientId", addIngredientToRecipe);
 
 // ----------------------------------------------------------------
 

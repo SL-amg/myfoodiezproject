@@ -12,6 +12,7 @@ const {
   creatCategoryController,
   updateCategoryByIdController,
   deleteCategoryIdController,
+  addRecipyToCategory,
 } = require("./categoryControllers");
 
 // ----------------------------------------------------------------
@@ -46,6 +47,8 @@ router.delete("/:categoryId", deleteCategoryIdController);
 router.get("/:categoryId", categoryDetailIdController);
 // to find an Category by Name
 router.get("/name/:categoryName", categoryDetailNameController);
+//to add recipy to Catagory
+router.post("/:categoryId/add/:RecipesId", addRecipyToCategory);
 // ----------------------------------------------------------------
 
 module.exports = router;
