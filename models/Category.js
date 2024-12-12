@@ -2,7 +2,8 @@ const { model, Schema } = require("mongoose");
 
 const categorySchema = new Schema({
   name: String,
-  Recipes: [{
+  recipes: [
+    {
     type: Schema.Types.ObjectId,
     ref: "Recipes",
   }

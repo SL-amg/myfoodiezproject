@@ -1,12 +1,12 @@
 // this controller is created to add/Modify/Read a new Recipes
 
-const Recipes = require("../../models/Recipes");
+const Recipe = require("../../models/Recipe");
 
 // ----------------------------------------------------------------
 // to create a New Recipes
 const creatNewRecipes = async (newRecipesData) => {
   console.log("Creating new Category", newRecipesData);
-  const newRecipes = await Recipes.create(newRecipesData);
+  const newRecipes = await Recipe.create(newRecipesData);
   return newRecipes;
 };
 exports.creatRecipesController =async (req, res) => {
@@ -25,7 +25,7 @@ exports.creatRecipesController =async (req, res) => {
 // to get all Recipess List
 exports.listRecipesController = async (req, res) => {
   try {
-    const recipess = await Recipes.find().populate("Category");
+    const recipess = await Recipe.find().populate("category");
     res.status(200).json(recipess);
   } catch (error) {
     res.status(500).json(error);
@@ -36,7 +36,7 @@ exports.listRecipesController = async (req, res) => {
 // by ID
 exports.RecipesDetailsIdController = async (req, res) => {
   const { RecipesId } = req.params;
-  const recipes = await Recipes.findById(RecipesId).populate("Category");
+  const recipes = await Recipe.findById(RecipesId);
   if (recipes) {
     res.status(200).json(recipes);
   } else {
@@ -46,9 +46,9 @@ exports.RecipesDetailsIdController = async (req, res) => {
 // by Name of Recipes
 exports.RecipesDetailNameController = async (req, res) => {
   const { RecipesName } = req.params;
-  const name = await Recipes.findOne({ 
+  const name = await Recipe.findOne({ 
     name: { "$regex": RecipesName, "$options": "i" } }
-  ).populate("Category");
+  );
   console.log(name);
   if (name) {
     res.status(200).json(name);
@@ -59,9 +59,9 @@ exports.RecipesDetailNameController = async (req, res) => {
 // by creater of Recipes
 exports.RecipesDetailCreaterController = async (req, res) => {
   const { RecipesCreater } = req.params;
-  const name = await Recipes.findOne({ 
+  const name = await Recipe.findOne({ 
     creater: { "$regex": RecipesCreater, "$options": "i" } }
-  ).populate("Category");
+  );
   console.log(name);
   if (name) {
     res.status(200).json(name);
@@ -78,7 +78,7 @@ exports.updateRecipesByIdController = async (req, res) => {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`; //updated file to upload image
     }
     const { RecipesId } = req.params;
-    const foundRecipes = await Recipes.findById(RecipesId);
+    const foundRecipes = await Recipe.findById(RecipesId);
     if (foundRecipes) {
       await foundRecipes.updateOne(req.body);
       res.status(202).json();
@@ -96,7 +96,7 @@ exports.updateRecipesByIdController = async (req, res) => {
 exports.deleteRecipesIdController = async (req, res) => {
   try {
     const { RecipesId } = req.params;
-    const foundRecipes = await Recipes.findById(RecipesId);
+    const foundRecipes = await Recipe.findById(RecipesId);
     if (foundRecipes) {
       await foundRecipes.deleteOne();
       res.status(204).end();

@@ -24,7 +24,7 @@ exports.creatCategoryController = (req, res) => {
 // to get all categories Fetch Get
 exports.listCategoriesController = async (req, res) => {
   try {
-    const categories = await Category.find().populate("Recipes"); // added this
+    const categories = await Category.find().populate("recipes"); // added this
     res.status(200).json(categories);
   } catch (e) {
     res.status(500).json(e.message);
@@ -36,7 +36,7 @@ exports.listCategoriesController = async (req, res) => {
 // to find an category by ID
 exports.categoryDetailIdController = async (req, res) => {
   const { categoryId } = req.params;
-  const category = await Category.findById(categoryId).populate("Recipes");
+  const category = await Category.findById(categoryId);
   if (category) {
     res.status(200).json(category);
   } else {
@@ -48,7 +48,7 @@ exports.categoryDetailNameController =async (req, res) => {
   const { categoryName } = req.params;
   const name = await Category.find({ 
     name: { "$regex": categoryName, "$options": "i" } }
-  ).populate("Recipes");
+  );
   console.log(name);
   if (name) {
     res.status(200).json(name);
