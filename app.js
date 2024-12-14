@@ -1,8 +1,15 @@
+//------------------------------
+//my Components imports
+
+//------------------------------
+
 const express = require("express");
 const connectDb = require("./database");
 const app = express();
 const port = 8000;
 const path = require("path");
+
+//-------------------------
 
 const accountsRouter = require("./api/account/accountsRoutes"); // this to be checked and changed
 const categoryRouter = require("./api/category/categoryRoutes");
@@ -23,3 +30,5 @@ connectDb();
 app.listen(port, () => {
   console.log(`This is to test if my server is working at port: ${port}`);
 });
+//-------------------------------------
+
