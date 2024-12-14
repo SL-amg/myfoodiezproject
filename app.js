@@ -8,6 +8,7 @@ const connectDb = require("./database");
 const app = express();
 const port = 8000;
 const path = require("path");
+const cors = require ('cors');
 
 //-------------------------
 
@@ -16,6 +17,7 @@ const categoryRouter = require("./api/category/categoryRoutes");
 const ingredientsRouter = require("./api/ingredients/ingredientsRoutes");
 const RecipesRouter = require("./api/Recipes/RecipesRoutes");
 
+app.use(cors());
 app.use(express.json());
 app.use(
   "/media",
