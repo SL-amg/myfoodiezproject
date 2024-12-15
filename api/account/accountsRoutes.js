@@ -10,6 +10,7 @@ const {
   listAccountsController,
   updateAccountController,
   deleteAccountIdController,
+  accountLoginController
 } = require("./accountControllers");
 
 // ----------------------------------------------------------------
@@ -47,5 +48,8 @@ router.get("/:accountId", accountDetailIdController);
 
 // Retrieve Account by Username
 router.get("/user/:userName", accountDetailUserController);
+
+//Login into An Account
+router.post("/login/", accountLoginController);
 
 module.exports = router;

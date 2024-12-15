@@ -14,7 +14,7 @@ const createNewAccount = async (newAccountData) => {
 exports.createAccountController = (req, res) => {
   try {
     if (req.file) {
-      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`; 
+      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     }
     const newAccount = createNewAccount(req.body);
     res.status(201).json(newAccount);
@@ -53,15 +53,32 @@ exports.accountDetailIdController = async (req, res) => {
 
 exports.accountDetailUserController = async (req, res) => {
   const { userName } = req.params;
-  const name = await Account.findOne({ 
-    username: { "$regex": userName, "$options": "i" } }
-  );
+  const name = await Account.findOne({
+    username: { $regex: userName, $options: "i" },
+  });
   console.log(name);
   if (name) {
     res.status(200).json(name);
   } else {
     res.status(404).json();
   }
+};
+
+// to login into an account
+exports.accountLoginController = async (req, res) => {
+  const { userName } = req.params;
+  const { password } = req.body;
+  const userAccount = await Account.findOne({
+    username: { $regex: userName, $options: "i" },
+  });
+  if (userAccount) {
+    const checkPassword = userAccount.password === password;
+if(checkPassword){
+}else{}
+  } else {
+    res.status(404).json();
+  }
+  res.status(200).json(name);
 };
 
 // ----------------------------------------------------------------
