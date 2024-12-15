@@ -8,12 +8,7 @@ const CategorySchema = new Schema({
     ref: "Recipe",
   }
   ], // added this 
-  ingredients: [
-    {
-    type: Schema.Types.ObjectId,
-    ref: "Ingredient",
-  }
-  ], // added this 
+  
 }
 );
 
