@@ -65,21 +65,21 @@ exports.accountDetailUserController = async (req, res) => {
 };
 
 // to login into an account
-exports.accountLoginController = async (req, res) => {
-  const { userName } = req.params;
-  const { password } = req.body;
-  const userAccount = await Account.findOne({
-    username: { $regex: userName, $options: "i" },
-  });
-  if (userAccount) {
-    const checkPassword = userAccount.password === password;
-if(checkPassword){
-}else{}
-  } else {
-    res.status(404).json();
-  }
-  res.status(200).json(name);
-};
+// exports.accountLoginController = async (req, res) => {
+//   const { userName } = req.params;
+//   const { password } = req.body;
+//   const userAccount = await Account.findOne({
+//     username: { $regex: userName, $options: "i" },
+//   });
+//   if (userAccount) {
+//     const checkPassword = userAccount.password === password;
+// if(checkPassword){
+// }else{}
+//   } else {
+//     res.status(404).json();
+//   }
+//   res.status(200).json(name);
+// };
 
 // ----------------------------------------------------------------
 
