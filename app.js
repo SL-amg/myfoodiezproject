@@ -23,7 +23,7 @@ app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
 passport.use(localStrategy);
-// passport.use(jwtStrategy);
+passport.use(jwtStrategy);
 app.use(
   "/media",
   express.static(path.join(__dirname, "media")) // this will give you your path exatly to ur media file

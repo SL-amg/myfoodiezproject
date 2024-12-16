@@ -25,3 +25,24 @@ exports.localStrategy = new LocalStrategy(
       }
     }
   );
+
+  //JWD class see video
+
+  exports.jwtStrategy = new JWTStrategy(
+    {
+      jwtFromRequest: fromAuthHeaderAsBearerToken(),
+      secretOrKey: JWT_SECRET,
+    },
+    async (jwtPayload, done) => {
+      if (Date.now() > jwtPayload.exp) {
+        console.log("jwt expired");
+        return done(null, false);
+      }
+      try {
+        const user = await User.findById(jwtPayload.id);
+        done(null, user);
+      } catch (error) {
+        done(error);
+      }
+    }
+  );
