@@ -1,28 +1,75 @@
 // This Controller's function is to Create/Retrieve/Update an Account
-
+const bcrypt = require("bcrypt");
 const Account = require("../../models/Account");
-
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET, JWT_EXPIRATION_MS } = require ("../../key"); // to check this
 // ----------------------------------------------------------------
 
 // Create A New Account
 
-const createNewAccount = async (newAccountData) => {
-  console.log("Creating new Account", newAccountData);
-  const newAccount = await Account.create(newAccountData);
-  return newAccount;
-};
-exports.createAccountController = (req, res) => {
+// const createNewAccount = async (newAccountData) => {
+//   console.log("Creating new Account", newAccountData);
+//   const newAccount = await Account.create(newAccountData);
+//   return newAccount;
+// };
+// exports.createAccountController = (req, res) => {
+//   try {
+//     if (req.file) {
+//       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+//     }
+//     const newAccount = createNewAccount(req.body);
+//     res.status(201).json(newAccount);
+//   } catch (e) {
+//     res.status(500).json(e.message);
+//     console.log(e.message);
+//   }
+// }; removed this
+
+exports.registerUserController = async (req, res) => {
+  const saltRounds = 10;
+  req.body.password = await bcrypt.hash(req.body.password, saltRounds);
+
   try {
     if (req.file) {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     }
-    const newAccount = createNewAccount(req.body);
-    res.status(201).json(newAccount);
+    const accountusername = Account(req.body);
+    await accountusername.save();
+    const payload = {
+      id: accountusername.id,
+      name: accountusername.username,
+      exp: Date.now() + JWT_EXPIRATION_MS,
+    };
+    const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
+    res.status(201).json({ token: token });
   } catch (e) {
-    res.status(500).json(e.message);
     console.log(e.message);
+    res.status(400).json(e.message);
   }
 };
+//  Logout from Account
+exports.logoutUserController = async (req, res) => {
+  const accountusername = await Account.find({ session: `${req.body.token}` });
+  if (accountusername.length > 0) {
+    const accountusername = users[0];
+    accountusername.session = null;
+    await accountusername.save();
+  }
+  res.status(200).json();
+};
+
+//  Login from Account
+exports.loginUserController = async (req, res) => {
+  const { user } = req;
+  const payload = {
+    id: user.id,
+    username: user.name,
+    exp: Date.now() + parseInt(JWT_EXPIRATION_MS),
+  };
+  const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
+  res.json({ token });
+};
+
 // ----------------------------------------------------------------
 
 // Retrieve all Accounts
@@ -63,23 +110,6 @@ exports.accountDetailUserController = async (req, res) => {
     res.status(404).json();
   }
 };
-
-// to login into an account
-// exports.accountLoginController = async (req, res) => {
-//   const { userName } = req.params;
-//   const { password } = req.body;
-//   const userAccount = await Account.findOne({
-//     username: { $regex: userName, $options: "i" },
-//   });
-//   if (userAccount) {
-//     const checkPassword = userAccount.password === password;
-// if(checkPassword){
-// }else{}
-//   } else {
-//     res.status(404).json();
-//   }
-//   res.status(200).json(name);
-// };
 
 // ----------------------------------------------------------------
 

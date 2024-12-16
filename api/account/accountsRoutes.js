@@ -1,17 +1,20 @@
 const express = require("express");
 const multer = require("multer");
 const router = express.Router();
+const passport =require("passport");
 
 // Account Controllers
 const {
-  createAccountController,
   accountDetailIdController,
   accountDetailUserController,
   listAccountsController,
   updateAccountController,
   deleteAccountIdController,
-  accountLoginController
+  registerUserController,
+  logoutUserController,
+  loginUserController,
 } = require("./accountControllers");
+
 
 // ----------------------------------------------------------------
 
@@ -29,13 +32,21 @@ const upload = multer({
 
 // ----------------------------------------------------------------
 
-//Account Routes
 
+//Authnticstion
+//Register User
+router.post("/signup", upload.single("image"), registerUserController);
+//Logout User
+router.post("/logoutuser", logoutUserController);
+//Login User
+router.post("/signin", passport.authenticate('local', { session: false }), loginUserController);
+
+//Account Routes
 // Retrieve all Accounts
 router.get("/", listAccountsController);
 
 //Create an Account
-router.post("/", upload.single("image"), createAccountController);
+// router.post("/", upload.single("image"), createAccountController); removed this
 
 // Update an Account by ID
 router.put("/:accountId", upload.single("image"), updateAccountController);
@@ -48,8 +59,5 @@ router.get("/:accountId", accountDetailIdController);
 
 // Retrieve Account by Username
 router.get("/user/:userName", accountDetailUserController);
-
-// //Login into An Account
-// router.post("/login/", accountLoginController);
 
 module.exports = router;

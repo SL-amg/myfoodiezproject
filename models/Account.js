@@ -2,7 +2,10 @@ const { model, Schema } = require("mongoose");
 
 const accountSchema = new Schema({
   token: String,
-  username: String,
+  username: {
+    type: String,
+    unique: true,
+  }, // make it a unique username
   name: String,
   password: String,
   image: String,
