@@ -2,6 +2,14 @@
 
 const Recipe = require("../../models/Recipe");
 
+const checkCreator = (user, recipe) => {
+  if (recipe.creator.equals(user.id)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 // ----------------------------------------------------------------
 // to create a New Recipes
 // const creatNewRecipes = async (newRecipesData) => {
@@ -93,44 +101,42 @@ exports.RecipesDetailCreaterController = async (req, res) => {
 // ----------------------------------------------------------------
 // to update a Recipes
 // by ID
-// exports.updateRecipesByIdController = async (req, res) => {
-//   try {
-//     if (req.file) {
-//       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`; //updated file to upload image
-//     }
-//     const { RecipesId } = req.params;
-//     const foundRecipes = await Recipe.findById(RecipesId);
+exports.updateRecipesByIdController = async (req, res) => {
+  try {
+    if (req.file) {
+      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`; //updated file to upload image
+    }
+    const { RecipesId } = req.params;
+    const foundRecipes = await Recipe.findById(RecipesId);
 
-//     const { user } = req
-    
-//     if (user.id !== recipe.creator.id) {
-//       return res.status(403).json("This Recipy Belongs to another User")
-//     }
-//     if (foundRecipes) {
-//       await foundRecipes.updateOne(req.body);
-//       res.status(202).json();
-//     } else {
-//       res.status(404).json("Recipy not found");
-//     }
-//   } catch (e) {
-//     res.status(500).json(e.message);
-//     console.log(e.message);
-//   }
-// };
+    if (foundRecipes) {
+      const ownerIsValid = checkCreator(req.user,foundRecipes );
+      if (ownerIsValid){
+      await foundRecipes.updateOne(req.body);
+      res.status(202).json();
+    } }
+    else {
+      res.status(404).json("Recipy not found");
+    }
+  } catch (e) {
+    res.status(500).json(e.message);
+    console.log(e.message);
+  }
+};
 
 //update recipy new code for testing
-exports.updateRecipesByIdController = async (req, res) => {
-  const { RecipesId } = req.params;
-  const recipe = await Recipe.findById(RecipesId);
-  const { user } = req
-  console.log(user.id)
-  // if (user !== recipe.creator.id) {
-  //   return res.status(403).json("This Recipy Belongs to another User")
-  // }
-  await recipe.updateOne(req.body);
-  const updatedRecipe = await Recipe.findById(RecipesId);
-  res.status(200).json(updatedRecipe);
-};
+// exports.updateRecipesByIdController = async (req, res) => {
+//   const { RecipesId } = req.params;
+//   const recipe = await Recipe.findById(RecipesId);
+//   const { user } = req
+//   console.log(user.id)
+//   // if (user !== recipe.creator.id) {
+//   //   return res.status(403).json("This Recipy Belongs to another User")
+//   // }
+//   await recipe.updateOne(req.body);
+//   const updatedRecipe = await Recipe.findById(RecipesId);
+//   res.status(200).json(updatedRecipe);
+// };
 // ----------------------------------------------------------------
 // to delete a Recipes
 //by ID
