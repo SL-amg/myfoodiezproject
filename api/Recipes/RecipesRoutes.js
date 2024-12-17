@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer"); // to add images
 const router = express.Router();
+const passport =require("passport");
 // ----------------------------------------------------------------
 
 const {
@@ -34,7 +35,7 @@ const upload = multer({
 // to get all Recipes Fetch Get
 router.get("/", listRecipesController);
 //to creat a new Recipes
-router.post("/", upload.single("image"), creatRecipesController);
+router.post("/", passport.authenticate('jwt', { session: false }), upload.single("image"), creatRecipesController);
 // to Update an Recipes  by ID
 router.put("/:RecipesId", upload.single("image"), updateRecipesByIdController);
 // to delete an Recipes by ID

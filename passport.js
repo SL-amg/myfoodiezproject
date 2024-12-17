@@ -39,7 +39,7 @@ exports.localStrategy = new LocalStrategy(
         return done(null, false);
       }
       try {
-        const user = await User.findById(jwtPayload.id);
+        const user = await Account.findById(jwtPayload.id);
         done(null, user);
       } catch (error) {
         done(error);
