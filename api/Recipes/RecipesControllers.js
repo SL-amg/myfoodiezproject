@@ -114,7 +114,11 @@ exports.updateRecipesByIdController = async (req, res) => {
       if (ownerIsValid){
       await foundRecipes.updateOne(req.body);
       res.status(202).json();
-    } }
+    } 
+    else {
+      res.status(403).json("Recipy not Created By this User");
+    }
+  }
     else {
       res.status(404).json("Recipy not found");
     }
@@ -124,19 +128,6 @@ exports.updateRecipesByIdController = async (req, res) => {
   }
 };
 
-//update recipy new code for testing
-// exports.updateRecipesByIdController = async (req, res) => {
-//   const { RecipesId } = req.params;
-//   const recipe = await Recipe.findById(RecipesId);
-//   const { user } = req
-//   console.log(user.id)
-//   // if (user !== recipe.creator.id) {
-//   //   return res.status(403).json("This Recipy Belongs to another User")
-//   // }
-//   await recipe.updateOne(req.body);
-//   const updatedRecipe = await Recipe.findById(RecipesId);
-//   res.status(200).json(updatedRecipe);
-// };
 // ----------------------------------------------------------------
 // to delete a Recipes
 //by ID
@@ -144,17 +135,24 @@ exports.deleteRecipesIdController = async (req, res) => {
   try {
     const { RecipesId } = req.params;
     const foundRecipes = await Recipe.findById(RecipesId);
+
     if (foundRecipes) {
+      const ownerIsValid = checkCreator(req.user,foundRecipes );
+
+      if (ownerIsValid){
       await foundRecipes.deleteOne();
       res.status(204).end();
-    } else {
-      res.status(404).json("not found");
+    }else {
+      res.status(403).json("Recipy not Created By this User");
+    }
+   } else {
+      res.status(404).json("Recipy not found");
     }
   } catch (e) {
     res.status(500).json(e.message);
     console.log(e.message);
   }
-};
+}; // to check this
 // ----------------------------------------------------------------
 // to add ingredient to recipy
 exports.addIngredientToRecipe = async (req, res) => {
