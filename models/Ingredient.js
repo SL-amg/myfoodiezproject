@@ -10,6 +10,10 @@ const IngredientSchema = new Schema({
       ref: "Recipe",
     }
   ],
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 
 });
 

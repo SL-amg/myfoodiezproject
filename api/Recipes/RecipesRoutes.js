@@ -41,11 +41,11 @@ router.put("/:RecipesId", passport.authenticate('jwt', { session: false }), uplo
 // to delete an Recipes by ID
 router.delete("/:RecipesId", passport.authenticate('jwt', { session: false }), deleteRecipesIdController);
 // to find an Recipes by ID
-router.get("/:RecipesId", RecipesDetailsIdController);
+router.get("/:RecipesId",passport.authenticate('jwt', { session: false }), RecipesDetailsIdController);
 // to find an Recipes by Name
-router.get("/name/:RecipesName", RecipesDetailNameController);
+router.get("/name/:RecipesName", passport.authenticate('jwt', { session: false }), RecipesDetailNameController);
 // to find an Recipes by Creater
-router.get("/creater/:RecipesCreater", RecipesDetailCreaterController);
+router.get("/creater/:RecipesCreater", passport.authenticate('jwt', { session: false }), RecipesDetailCreaterController);
 //to add ingredneti to recipy
 router.post("/:RecipesId/add/:ingredientId", addIngredientToRecipe);
 

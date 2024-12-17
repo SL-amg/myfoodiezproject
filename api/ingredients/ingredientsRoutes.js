@@ -30,25 +30,25 @@ const upload = multer({
 // ----------------------------------------------------------------
 //Ingredients Routs
 // to get all Ingredients Fetch Get
-router.get("/", listIngredientsController);
+router.get("/", passport.authenticate('jwt', { session: false }), listIngredientsController);
 //to creat a new Ingredients
 router.post(
-  "/",
+  "/", passport.authenticate('jwt', { session: false }),
   upload.single("image"),
   createIngredientController
 );
 // to Update an Ingredients  by ID
 router.put(
-  "/:ingredientId",
+  "/:ingredientId", passport.authenticate('jwt', { session: false }),
   upload.single("image"),
   updateIngredientByIdController
 );
 // to delete an Ingredients by ID
-router.delete("/:ingredientId", deleteIngredientIdController);
+router.delete("/:ingredientId", passport.authenticate('jwt', { session: false }), deleteIngredientIdController);
 // to find an Ingredients by ID
-router.get("/:ingredientId", ingredientDetailIdController);
+router.get("/:ingredientId", passport.authenticate('jwt', { session: false }), ingredientDetailIdController);
 // to find an Ingredients by Name
-router.get("/ingredient/:ingredientName", ingredientDetailNameController);
+router.get("/ingredient/:ingredientName", passport.authenticate('jwt', { session: false }), ingredientDetailNameController);
 
 // ----------------------------------------------------------------
 
