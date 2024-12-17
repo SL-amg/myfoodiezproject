@@ -33,13 +33,13 @@ const upload = multer({
 // ----------------------------------------------------------------
 //Recipes Routs
 // to get all Recipes Fetch Get
-router.get("/", listRecipesController);
+router.get("/", passport.authenticate('jwt', { session: false }), listRecipesController);
 //to creat a new Recipes
 router.post("/", passport.authenticate('jwt', { session: false }), upload.single("image"), creatRecipesController); // registered uses can creat recipies
 // to Update an Recipes  by ID
 router.put("/:RecipesId", passport.authenticate('jwt', { session: false }), upload.single("image"), updateRecipesByIdController); //updated recipy by creater
 // to delete an Recipes by ID
-router.delete("/:RecipesId", deleteRecipesIdController);
+router.delete("/:RecipesId", passport.authenticate('jwt', { session: false }), deleteRecipesIdController);
 // to find an Recipes by ID
 router.get("/:RecipesId", RecipesDetailsIdController);
 // to find an Recipes by Name
