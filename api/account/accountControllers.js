@@ -61,9 +61,10 @@ exports.logoutUserController = async (req, res) => {
 //  Login from Account
 exports.loginUserController = async (req, res) => {
   const { user } = req;
+  console.log(user);
   const payload = {
     id: user.id,
-    username: user.name,
+    username: user.username,
     exp: Date.now() + parseInt(JWT_EXPIRATION_MS),
   };
   const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);

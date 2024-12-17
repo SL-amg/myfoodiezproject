@@ -1,7 +1,6 @@
 const { model, Schema } = require("mongoose");
 
 const accountSchema = new Schema({
-  token: String,
   username: {
     type: String,
     unique: true,
