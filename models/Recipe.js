@@ -1,12 +1,12 @@
 const { model, Schema } = require("mongoose");
 const Category = require("./Category");
+const Account = require("./Account");
 
 const RecipeSchema = new Schema({
   name: { type: String },
   image: String,
   nutritionFact: String,
   video: String,
-  creater: String,
   category: {
     type: Schema.Types.ObjectId,
     ref: "Category"
@@ -17,7 +17,10 @@ const RecipeSchema = new Schema({
       ref: "Ingredient",
     }
   ],
-
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 module.exports = model("Recipe", RecipeSchema);
