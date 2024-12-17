@@ -8,7 +8,7 @@ const checkCreator = (user, recipe) => {
   } else {
     return false;
   }
-};
+}; // this is an important function thankkk youuuuu
 
 // ----------------------------------------------------------------
 // to create a New Recipes
@@ -31,7 +31,7 @@ const checkCreator = (user, recipe) => {
 // };
 
 // To Create a New Recipy other style
-
+// ONLY registers users can creat a recipy with Specifice creator
 exports.creatRecipesController = async (req, res) => {
 const { user } = req
 if (user) {
@@ -50,6 +50,7 @@ res.status(201).json();
 
 // ----------------------------------------------------------------
 // to get all Recipess List
+// any user can get the recipers since requested in rout for all users 
 exports.listRecipesController = async (req, res) => {
   try {
     const recipess = await Recipe.find()
@@ -100,7 +101,7 @@ exports.RecipesDetailCreaterController = async (req, res) => {
 };
 // ----------------------------------------------------------------
 // to update a Recipes
-// by ID
+// by ID .. only creater can update the recipy created by creater
 exports.updateRecipesByIdController = async (req, res) => {
   try {
     if (req.file) {
@@ -130,7 +131,7 @@ exports.updateRecipesByIdController = async (req, res) => {
 
 // ----------------------------------------------------------------
 // to delete a Recipes
-//by ID
+//by ID only by the creator of the recipy
 exports.deleteRecipesIdController = async (req, res) => {
   try {
     const { RecipesId } = req.params;
