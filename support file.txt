@@ -107,3 +107,44 @@ exports.loginUser = async (req, res) => {
   const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
   res.json({ token });
 };
+
+---------- from recity controllers
+// to create a New Recipes
+// const creatNewRecipes = async (newRecipesData) => {
+//   console.log("Creating new Category", newRecipesData);
+//   const newRecipes = await Recipe.create(newRecipesData);
+//   return newRecipes;
+// };
+// exports.creatRecipesController =async (req, res) => {
+//   try {
+//     if (req.file) {
+//       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`; //updated file to upload image
+//     }
+//     const newRecipes = await creatNewRecipes(req.body);
+//     res.status(201).json(newRecipes);
+//   } catch (e) {
+//     res.status(500).json(e.message);
+//     console.log(e.message);
+//   }
+// };
+
+------------------------ JWT file in passport
+exports.jwtStrategy = new JWTStrategy(
+  {
+    jwtFromRequest: fromAuthHeaderAsBearerToken(),
+    secretOrKey: JWT_SECRET,
+  },
+  async (jwtPayload, done) => {
+    if (Date.now() > jwtPayload.exp) {
+      console.log("jwt expired");
+      return done(null, false);
+    }
+    try {
+      const user = await User.findById(jwtPayload.id);
+      done(null, user);
+    } catch (error) {
+      done(error);
+    }
+  }
+);
+

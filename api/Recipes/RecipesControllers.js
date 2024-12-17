@@ -11,24 +11,6 @@ const checkCreator = (user, recipe) => {
 }; // this is an important function thankkk youuuuu
 
 // ----------------------------------------------------------------
-// to create a New Recipes
-// const creatNewRecipes = async (newRecipesData) => {
-//   console.log("Creating new Category", newRecipesData);
-//   const newRecipes = await Recipe.create(newRecipesData);
-//   return newRecipes;
-// };
-// exports.creatRecipesController =async (req, res) => {
-//   try {
-//     if (req.file) {
-//       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`; //updated file to upload image
-//     }
-//     const newRecipes = await creatNewRecipes(req.body);
-//     res.status(201).json(newRecipes);
-//   } catch (e) {
-//     res.status(500).json(e.message);
-//     console.log(e.message);
-//   }
-// };
 
 // To Create a New Recipy other style
 // ONLY registers users can creat a recipy with Specifice creator
