@@ -153,6 +153,6 @@ exports.addCategoryToRecipy = async (req, res) => {
   const  updatedRecipe = await recipe.updateOne({
     $push: {category : categoryId},
   })
-  res.status(200).json(updatedRecipe);
+  res.status(200).json(updatedRecipe); // this is not working why !!
 }
 //END of Controller
