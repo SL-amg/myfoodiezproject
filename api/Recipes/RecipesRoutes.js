@@ -13,6 +13,7 @@ const {
   updateRecipesByIdController,
   deleteRecipesIdController,
   addIngredientToRecipe,
+  addCategoryToRecipy,
 } = require("./RecipesControllers");
 // ----------------------------------------------------------------
 
@@ -48,7 +49,8 @@ router.get("/name/:RecipesName", passport.authenticate('jwt', { session: false }
 router.get("/creater/:RecipesCreater", passport.authenticate('jwt', { session: false }), RecipesDetailCreaterController);
 //to add ingredneti to recipy
 router.post("/:RecipesId/add/:ingredientId", addIngredientToRecipe);
-
+//to add Catigory to recipy
+router.post("/:RecipesId/add/:categoryId", addCategoryToRecipy);
 // ----------------------------------------------------------------
 
 module.exports = router;

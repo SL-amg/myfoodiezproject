@@ -146,4 +146,13 @@ exports.addIngredientToRecipe = async (req, res) => {
     })
     res.status(200).json(updatedRecipe);
   }
+// to add ingredient to recipy
+exports.addCategoryToRecipy = async (req, res) => {
+  const { RecipesId, categoryId } = req.params;
+  const recipe = await Recipe.findById(RecipesId);
+  const  updatedRecipe = await recipe.updateOne({
+    $push: {category : categoryId},
+  })
+  res.status(200).json(updatedRecipe);
+}
 //END of Controller
