@@ -17,7 +17,7 @@ const { jwtStrategy } = require("./passport") // setup from password local strat
 const accountsRouter = require("./api/account/accountsRoutes"); // this to be checked and changed
 const categoryRouter = require("./api/category/categoryRoutes");
 const ingredientsRouter = require("./api/ingredients/ingredientsRoutes");
-const RecipesRouter = require("./api/Recipes/RecipesRoutes");
+const recipesRouter = require("./api/Recipes/RecipesRoutes");
 
 app.use(cors());
 app.use(express.json());
@@ -31,7 +31,7 @@ app.use(
 app.use("/accounts", accountsRouter); // this one to be checked
 app.use("/categories", categoryRouter);
 app.use("/ingredients", ingredientsRouter);
-app.use("/Recipes", RecipesRouter);
+app.use("/recipes", recipesRouter);
 connectDb();
 
 app.listen(port, () => {

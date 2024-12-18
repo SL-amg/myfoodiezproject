@@ -37,16 +37,19 @@ exports.listRecipesController = async (req, res) => {
   try {
     const recipess = await Recipe.find()
     .populate("ingredients")
-    .populate("category");
+    .populate("category")
+    .populate("creator")
     res.status(200).json(recipess);
   } catch (error) {
+    console.log(error);
+    
     res.status(500).json(error);
   }
 };
 // ----------------------------------------------------------------
 // to find Recipes
 // by ID
-exports.RecipesDetailsIdController = async (req, res) => {
+exports.recipesDetailsIdController = async (req, res) => {
   const { RecipesId } = req.params;
   const recipes = await Recipe.findById(RecipesId);
   if (recipes) {
@@ -56,7 +59,7 @@ exports.RecipesDetailsIdController = async (req, res) => {
   }
 };
 // by Name of Recipes
-exports.RecipesDetailNameController = async (req, res) => {
+exports.recipesDetailNameController = async (req, res) => {
   const { RecipesName } = req.params;
   const name = await Recipe.findOne({ 
     name: { "$regex": RecipesName, "$options": "i" } }
@@ -69,7 +72,7 @@ exports.RecipesDetailNameController = async (req, res) => {
   }
 };
 // by creater of Recipes
-exports.RecipesDetailCreaterController = async (req, res) => {
+exports.recipesDetailCreaterController = async (req, res) => {
   const { RecipesCreater } = req.params;
   const name = await Recipe.findOne({ 
     creater: { "$regex": RecipesCreater, "$options": "i" } }

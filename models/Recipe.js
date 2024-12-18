@@ -19,7 +19,7 @@ const RecipeSchema = new Schema({
   ],
   creator: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "Account",
   },
 });
 

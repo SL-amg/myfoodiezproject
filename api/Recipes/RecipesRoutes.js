@@ -6,9 +6,9 @@ const passport =require("passport");
 
 const {
   listRecipesController,
-  RecipesDetailsIdController,
-  RecipesDetailNameController,
-  RecipesDetailCreaterController,
+  recipesDetailsIdController,
+  recipesDetailNameController,
+  recipesDetailCreaterController,
   creatRecipesController,
   updateRecipesByIdController,
   deleteRecipesIdController,
@@ -42,11 +42,11 @@ router.put("/:RecipesId", passport.authenticate('jwt', { session: false }), uplo
 // to delete an Recipes by ID
 router.delete("/:RecipesId", passport.authenticate('jwt', { session: false }), deleteRecipesIdController);
 // to find an Recipes by ID
-router.get("/:RecipesId",passport.authenticate('jwt', { session: false }), RecipesDetailsIdController);
+router.get("/:RecipesId",passport.authenticate('jwt', { session: false }), recipesDetailsIdController);
 // to find an Recipes by Name
-router.get("/name/:RecipesName", passport.authenticate('jwt', { session: false }), RecipesDetailNameController);
+router.get("/name/:RecipesName", passport.authenticate('jwt', { session: false }), recipesDetailNameController);
 // to find an Recipes by Creater
-router.get("/creater/:RecipesCreater", passport.authenticate('jwt', { session: false }), RecipesDetailCreaterController);
+router.get("/creater/:RecipesCreater", passport.authenticate('jwt', { session: false }), recipesDetailCreaterController);
 //to add ingredneti to recipy
 router.post("/:RecipesId/add/:ingredientId", addIngredientToRecipe);
 //to add Catigory to recipy
