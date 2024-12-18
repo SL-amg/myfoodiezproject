@@ -85,11 +85,11 @@ exports.listAccountsController = async (req, res) => {
 };
 // ----------------------------------------------------------------
 
-// Retrieve an Account's Detail by ID
+// Retrieve an Account's Detail by token
 
 exports.accountDetailIdController = async (req, res) => {
-  const { accountId } = req.params;
-  const account = await Account.findById(accountId);
+  const { user } = req;
+  const account = await Account.findById(user.id);
   if (account) {
     res.status(200).json(account);
   } else {

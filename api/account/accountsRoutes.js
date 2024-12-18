@@ -54,8 +54,8 @@ router.put("/:accountId", upload.single("image"), updateAccountController);
 // Delete Account by ID
 router.delete("/:accountId", deleteAccountIdController);
 
-// Retrieve Account by ID
-router.get("/:accountId", accountDetailIdController);
+// Retrieve Account by token
+router.get("/details", passport.authenticate("jwt", {session: false}) ,accountDetailIdController);
 
 // Retrieve Account by Username
 router.get("/user/:userName", accountDetailUserController);
