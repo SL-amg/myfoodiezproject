@@ -35,7 +35,7 @@ const upload = multer({
 // to get all Category Fetch Get
 router.get("/", listCategoriesController);
 //to creat a new Category
-router.post("/", upload.single("image"), creatCategoryController);
+router.post("/",passport.authenticate('jwt', { session: false }), upload.single("image"), creatCategoryController);
 // to Update an Category  by ID
 router.put(
   "/:categoryId",

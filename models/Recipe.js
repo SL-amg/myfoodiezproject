@@ -7,6 +7,7 @@ const RecipeSchema = new Schema({
   image: String,
   nutritionFact: String,
   video: String,
+  image: String,
   category: {
     type: Schema.Types.ObjectId,
     ref: "Category"

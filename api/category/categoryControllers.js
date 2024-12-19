@@ -1,6 +1,8 @@
 // this controller is created to add/Modify/Read a new Categoray
 const Category = require("../../models/Category");
 
+
+
 // ----------------------------------------------------------------
 // to create a  new categories
 const creatNewCategory = async (newCategoryData) => {
@@ -10,6 +12,12 @@ const creatNewCategory = async (newCategoryData) => {
 };
 exports.creatCategoryController = (req, res) => {
   try {
+    const { user } = req
+if (user) {
+  req.body.creator = user.id
+} else{
+  res.status(401).json("please Login")
+}
     if (req.file) {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`; //updated file to upload image
     }

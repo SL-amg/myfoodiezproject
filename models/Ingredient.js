@@ -4,6 +4,7 @@ const IngredientSchema = new Schema({
   name: String,
   scale: String,
   amount: String,
+  image: String,
   recipes: [
     {
       type: Schema.Types.ObjectId,
