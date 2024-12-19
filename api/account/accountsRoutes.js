@@ -13,6 +13,7 @@ const {
   registerUserController,
   logoutUserController,
   loginUserController,
+  updateProfileController,
 } = require("./accountControllers");
 
 
@@ -49,7 +50,12 @@ router.get("/", listAccountsController);
 // router.post("/", upload.single("image"), createAccountController); removed this
 
 // Update an Account by ID
-router.put("/:accountId", upload.single("image"), updateAccountController);
+// router.put("/:accountId", upload.single("image"), updateAccountController);
+
+// Update an profile
+router.put("/updateprofile", 
+  passport.authenticate("jwt", {session: false}) ,
+   upload.single("image"), updateProfileController);
 
 // Delete Account by ID
 router.delete("/:accountId", deleteAccountIdController);

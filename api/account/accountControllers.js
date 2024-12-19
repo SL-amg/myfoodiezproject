@@ -114,8 +114,28 @@ exports.accountDetailUserController = async (req, res) => {
 
 // ----------------------------------------------------------------
 
-// Update an Account by ID
+// Update an Account by Token
 
+exports.updateProfileController = async (req, res) => {
+  const { user } = req;
+  const account = user
+  console.log("account", account);
+  try {
+  if (req.file) {
+    req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+  }
+  
+    await account.updateOne(req.body);
+    const updatedAccount = await Account.findById(account.id)
+    res.status(200).json(updatedAccount);
+} catch (e) {
+  res.status(500).json(e.message);
+  console.log(e.message);
+}
+};
+
+
+// Update an Account by ID
 exports.updateAccountController = async (req, res) => {
   try {
     if (req.file) {

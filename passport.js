@@ -34,6 +34,8 @@ exports.localStrategy = new LocalStrategy(
       secretOrKey: JWT_SECRET,
     },
     async (jwtPayload, done) => {
+      console.log("jwt");
+      
       if (Date.now() > jwtPayload.exp) {
         console.log("jwt expired");
         return done(null, false);
